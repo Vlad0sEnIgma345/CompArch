@@ -657,6 +657,325 @@
 	\newpage
 	
 	\section{Дискретизация аналогового сигнала. Эффекты дискретизации. Теорема Котельникова.}
+	\vspace{-1em}
+	\subsection{Дискретизация аналогового сигнала:}
+	
+	\textbf{Дискретизация} -- преобразование непрерывной функции в дискретную.
+	\newline
+	\textbf{Частота дискретизации} -- число отсчётов в ед. времени при дискретизации непрерывного сигнала.
+	\newline
+	Некоторые из используемых частот дискретизации звука: 
+	\begin{itemize}
+		\item 8 000 Гц -- телефон, достаточно для речи; 
+		\item 22 050 Гц -- радио; 
+		\item 44 100 Гц -- используется в Audio CD; 
+		\item 48 000 Гц -- DVD, DAT; 
+		\item 192 000 Гц -- DVD-Audio (MLP 2.0); 
+		\item 2 822 400 Гц -- SACD, процесс однобитной дельта-сигма модуляции (DSD -- Direct Stream Digital), разработанный компаниями Sony и Philips совместно.
+	\end{itemize}
+	\vspace{-1.5em}
+	\subsubsection{Формат WAV и PCM (импульсно-кодовая модуляция)}
+	Формат WAV — контейнер для хранения оцифрованного аудио, использующий импульсно-кодовую модуляцию (PCM).
+	\begin{itemize}
+		\item WAV (Waveform Audio File Format) хранит несжатый звук в формате PCM.
+		\item PCM (Pulse Code Modulation): аналоговый сигнал измеряется АЦП через равные интервалы T.
+		\item Мгновенные значения сигнала преобразуются в цифровые коды.
+	\end{itemize}
+	\vspace{-1.5em}
+	\subsubsection{Формат DSD и одноразрядное квантование}
+	DSD — однобитный аудиоформат, использующий плотностно-импульсную модуляцию для SACD.
+	\begin{itemize}
+		\item DSD (Direct Stream Digital) разработан Sony и Philips для Super Audio CD.
+		\item PDM (Pulse Density Modulation): разновидность сигма-дельта-модуляции.
+		\item Передискретизация (oversampling): отсчёты берутся с частотой, превышающей верхнюю граничную частоту.
+		\item Шум квантования уменьшается пропорционально росту частоты дискретизации.
+		\item Отношение сигнал/шум возрастает с увеличением частоты дискретизации.
+		\item Положительная амплитуда: «1», отрицательная: «0», нулевая точка: смена двоичного числа.
+	\end{itemize}
+	\vspace{-1.5em}
+	\begin{figure}[H]
+		\centering
+		\begin{minipage}[t]{0.48\linewidth}
+			\centering
+			\includegraphics[width=\linewidth, height=0.2\textheight]{img/03_01}
+		\end{minipage}%
+		\hfill
+		\begin{minipage}[t]{0.48\linewidth}
+			\centering
+			\includegraphics[width=\linewidth, height=0.2\textheight]{img/03_02}
+		\end{minipage}
+		\small{Импульсно-кодовая (PCM) и плотностно-импульсная (PDM) модуляции}
+		\label{fig:03_combined}
+	\end{figure}
+	
+	\subsection{Ошибки дискретизации и погрешности преобразования}
+	Дискретизация заменяет непрерывный сигнал последовательностью импульсов, вызывая погрешности. Период дискретизации (шаг дискретизации) должен быть таким, чтобы 
+	было возможно восстановление непрерывной функции по ее отсчетам с 
+	допустимой точностью.
+	\begin{itemize}
+		\item Дискретизация теряет часть информации о сигнале.
+		\item Период дискретизации $\Delta t$ влияет на точность восстановления сигнала.
+		\item Частота дискретизации: $f_{\text{д}} = 1/\Delta t$.
+		\item Погрешности: статическая ($\Delta_{\text{ст}}$), дискретизации $\text{д}$), восстановления ($\Delta_{\text{восст}}$).
+		\item Полная погрешность: $\Delta = \Delta_{\text{ст}} + \Delta_{\text{д}} + \Delta_{\text{восст}}$.
+		\item Динамическая погрешность зависит от ненулевых производных сигнала.
+	\end{itemize}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1\linewidth, height=0.2\textheight]{img/03_03}
+		\small{Дискретизация аналогового сигнала}
+		\label{fig:03_03}
+	\end{figure}
+	
+	\subsubsection{Способы дискретизации}
+	Дискретизация бывает равномерной и неравномерной.
+	\begin{itemize}
+		\item Равномерная: $\Delta t = \text{const}$.
+		\item Неравномерная: $\Delta t$ варьируется.
+	\end{itemize}
+	
+	\subsubsection{Виды и формы представления погрешностей}
+	Погрешности измерения классифицируются по типу и форме представления.
+	\begin{itemize}
+		\item Погрешность измерения: отклонение результата от истинного значения.
+		\item Формы представления:
+		\begin{itemize}
+			\item Абсолютная: $\Delta = X - X_{\text{и}}$.
+			\item Приведённая: $\gamma = \frac{\Delta}{X_{\text{max}} - X_{\text{min}}}$.
+			\item Относительная: $\delta = \frac{\Delta}{X}$.
+		\end{itemize}
+		\item Аддитивная погрешность: постоянный предел во всём диапазоне.
+		\item Мультипликативная погрешность: пропорциональна входной величине.
+		\item Полная статическая погрешность: $\Delta_\Sigma = \Delta_c + \Delta^0 + \Delta_m + \Delta_{\text{промахи}} + \dots$.
+		\item Методическая погрешность $\Delta_m$: зависит от метода измерения.
+	\end{itemize}
+	
+	\newpage
+	
+	\subsubsection{Систематические и случайные погрешности}
+	Погрешности делятся на систематические и случайные.
+	\begin{itemize}
+		\item Систематическая погрешность: предсказуема, устраняется поправками.
+		\begin{itemize}
+			\item Постоянные: трудно обнаруживаются, требуют поверки приборов.
+			\item Изменяющиеся: связаны с температурой, напряжением и др.
+			\item Составляющие: усиления, квантования, нуля.
+			\item Формула: $\Delta_c = \Delta_y + \Delta_k + \Delta_n + \dots$.
+		\end{itemize}
+		\item Дрейф: медленно изменяющиеся непредсказуемые погрешности.
+		\item Случайная погрешность $\Delta^0$: непредсказуема, выявляется при повторных измерениях.
+		\item Нормальный закон распределения (Гаусса):
+		\begin{itemize}
+			\item Погрешности принимают бесконечные значения.
+			\item Симметричность: погрешности разного знака встречаются одинаково.
+			\item Частота погрешностей уменьшается с их ростом.
+		\end{itemize}
+		\item Среднеквадратическое отклонение $\sigma$ оценивает разброс измерений.
+		\item Правило трёх $\sigma$: $X_i - M(X) \leq 3\sigma$ с вероятностью 99.7\%.
+	\end{itemize}
+	
+	\subsubsection{Критерии измерений}
+	Тип измерений зависит от соотношения систематической и случайной погрешностей.
+	\begin{itemize}[leftmargin=1.85em]
+		\item Если $X_{\text{max}} - X_{\text{min}} \leq 0.8\sigma_c$: доминирует систематическая погрешность, измерение однократное.
+		\item Если $X_{\text{max}} - X_{\text{min}} > 8\sigma_c$: доминирует случайная погрешность, измерение многократное.
+		\item Если $X_{\text{max}} - X_{\text{min}} \approx 3\sigma_c$: погрешность смешанная, измерения многократные.
+	\end{itemize}
+	
+	\subsubsection{Погрешности АЦП}
+	Передаточная характеристика АЦП определяет статические и динамические погрешности.
+	\begin{itemize}
+		\item Статическая погрешность: отклонение реальной характеристики от идеальной.
+		\item Методическая погрешность $\Delta_m$: равномерное распределение, $\sigma_m = \frac{\Delta x}{2\sqrt{3}}$.
+		\item Аддитивная погрешность (Offset): смещение характеристики по оси напряжения.
+		\item Мультипликативная погрешность (Full-Scale): изменение наклона характеристики.
+		\item Дифференциальная нелинейность (DNL): разница в ширине ступенек характеристики.
+		\item Интегральная нелинейность (INL): отклонение характеристики от аппроксимирующей прямой.
+		\begin{itemize}
+			\item Аппроксимация: по методу наименьших квадратов или через крайние точки.
+			\item INL выражается в единицах LSB.
+		\end{itemize}
+		\item Динамическая погрешность: связана с дискретизацией ($\Delta_{\text{высш}}$) и восстановлением ($\Delta_{\text{восст}}$).
+	\end{itemize}
+	
+	\subsubsection{Источники динамической погрешности}
+	Динамические погрешности возникают из-за нестабильности и неточности процесса дискретизации.
+	\begin{itemize}
+		\item Нестабильность $\Delta t$ из-за синхронизации и срабатывания ключей АЦП.
+		\item Неточность взятия отсчётов: связана с конечным временем преобразования.
+		\item Эквивалентность: неточность отсчёта и неопределённость момента отсчёта.
+		\item Апертурное время $t_a$: время неопределённости момента отсчёта.
+	\end{itemize}
+	
+	\subsubsection{Погрешность восстановления}
+	Погрешности восстановления связаны с методами интерполяции и нарушением теоремы отсчётов.
+	\begin{itemize}
+		\item Источники:
+		\begin{itemize}
+			\item Невыполнение теоремы отсчётов.
+			\item Приближённые методы восстановления.
+		\end{itemize}
+		\item Погрешность восстановления: $\Delta_a = \Delta_{\text{восст}}$.
+	\end{itemize}
+	
+	\subsubsection{Методы восстановления}
+	Методы интерполяции влияют на точность восстановления сигнала.
+	\begin{itemize}
+		\item Линейная интерполяция:
+		\begin{itemize}
+			\item Точки соединяются прямолинейными отрезками.
+			\item Погрешность: $\Delta_{\text{восст}} = \frac{|x''(t)|_{\text{max}} \, \Delta_{\text{высш}}^2}{8}$.
+			\item Для синусоиды $x(t) = x_m \sin(\omega_Х t)$: $|x''(t)|_{\text{max}} = x_m \omega_{\text{высш}}^2$.
+			\item Частота квантования: $f_k \geq \frac{\pi f_{\text{высш}}}{\sqrt{2\delta}} \approx 22.2 f_{\text{высш}}$ для $\delta = 1\%$.
+			\item Задержка: $\Delta t$ из-за необходимости двух точек.
+		\end{itemize}
+		\item Метод прямоугольников:
+		\begin{itemize}
+			\item Погрешность: $\Delta_{\text{восст}} = \Delta_a = \left| \frac{dx}{dt} \right|_{\text{max}} \Delta t$.
+			\item Для синусоиды: $\Delta_{\text{восст}} = x_m 2\pi f_{\text{высш}} \Delta t$.
+			\item Частота квантования: $f_k \geq \frac{2\pi f_{\text{высш}}}{\delta} \approx 628 \frac{f_{\text{высш}}} {\delta \%}$ для $\delta = 1\%$.
+			\item Нет задержки, но требуется высокая $f_k$.
+		\end{itemize}
+		\item Квадратичная интерполяция: использует квадратный трёхчлен для повышения точности.
+	\end{itemize}
+	
+	\begin{figure}[H]
+		\centering
+		\begin{minipage}[t]{0.48\linewidth}
+			\centering
+			\includegraphics[width=\linewidth, height=0.2\textheight]{img/03_04}
+		\end{minipage}%
+		\hfill
+		\begin{minipage}[t]{0.48\linewidth}
+			\centering
+			\includegraphics[width=\linewidth, height=0.2\textheight]{img/03_05}
+		\end{minipage}
+		\small{Схемы восстановления сигнала: линейная интерполяция и метод прямоугольников}
+		\label{fig:05_combined}
+	\end{figure}
+	
+	\newpage
+	
+	\subsection{Теорема Котельникова и эффекты дискретизации}
+	Кратко теорема Котельникова гласит о том, что непрерывный сигнал с ограниченным спектром можно точно восстановить по его дискретным отсчётам, если они были взяты с частотой дискретизации, превышающего максимальную частоту сигнала минимум в два раза. 
+	\newline
+	Она определяет условия восстановления сигнала без потерь.
+	\vspace{-0.5em}
+	\begin{itemize}
+		\item Формулировка (1933, В.А. Котельников): сигнал с полосой частот от $0$ до $f_c$ восстанавливается при $\Delta t = \frac{1}{2f_c}$.
+		\vspace{-0.75em}
+		\item Восстановление: $x(t) = \sum\limits_{k=-\infty}^{\infty} x(k\Delta t) \frac{\sin(\omega_c (t - k\Delta t))}{\omega_c (t - k\Delta t)}$, где $\omega_c = 2\pi f_c = \frac{2\pi}{\Delta t_c}$.
+		\vspace{-0.5em}
+		\item Ограничения: требует бесконечного числа отсчётов и ограниченного спектра.
+		\vspace{-0.5em}
+		\item Погрешность: $\varepsilon = \frac{E_0}{E_C} = \frac{\int\limits_{0}^{\infty} A^2(\omega) d\omega - \int\limits_{0}^{\omega_c} A^2(\omega) d\omega}{\int\limits_0^{\infty} A^2(\omega) d\omega} = \frac{\int\limits_{\omega_c}^{\infty} A^2(\omega) d\omega}{\int\limits_0^{\infty} A^2(\omega) d\omega}$, 
+		\newline
+		где $E_0$ -- энергия отброшенной части спектра, а $E_C$ -- полная энергия сигнала .
+	\end{itemize}
+	
+	Функция отсчётов $sin z / z$ имеет следующую форму:
+	\vspace{-1em}
+	\begin{figure}[H]
+		\hspace{-5em}
+		\centering
+		\includegraphics[width=1\linewidth, height=0.185\textheight]{img/03_06}
+		\label{fig:03_06}
+	\end{figure}
+	\vspace{-1.5em}
+	Графическая схема восстановления функции представлена ниже. Восстановленная 
+	функция будет соответствовать исходной с любой наперёд заданной точностью.
+	\vspace{-1em} 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1\linewidth, height=0.175\textheight]{img/03_07}
+		\small {Амплитудно-частотная характеристика сигнала x(t)}
+		\label{fig:03_07}
+	\end{figure}
+	\vspace{-1em}
+	Функция $X(j\omega)$ является спектром сигнала \(X(j\omega) = \int\limits_{-\infty}^{\infty} x(t) e^{j\omega t} \, dt\):
+	\vspace{-1em}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1\linewidth, height=0.15\textheight]{img/03_08}
+		\label{fig:03_08}
+	\end{figure}
+	\vspace{-2.15em}
+	Сигнал с ограниченным спектром (\textbf{финитный по частоте}) может быть точно восстановлен по своему отсчётному ряду с помощью ряда Котельникова.
+	
+	\newpage
+	
+	\subsection{Преобразование Фурье}
+	Преобразование Фурье анализирует спектр сигнала.
+	\vspace{-0.5em}
+	\begin{itemize}
+		\item Непрерывное: $X(\nu) = \int\limits_{-\infty}^{\infty} x(t) e^{-2\pi i \nu t} dt, \quad x(t) = \int\limits_{-\infty}^{\infty} X(\nu) e^{2\pi i \nu t} d\nu$.
+		\vspace{-0.5em}
+		\item Дискретное (для сигнала длины $N=8$):
+		\vspace{-0.5em}
+		\begin{itemize}
+			\item Базисные частоты: $N/2 + 1 = 5$.
+			\item Базисные функции: $N+2$, две равны нулю.
+			\item Обратное преобразование: сумма $N$ синусоид.
+		\end{itemize}
+	\end{itemize}
+	\vspace{-0.8em}
+	\begin{equation}
+		\begin{aligned}
+			&\hspace{-17em}A_k = \frac{1}{N} \sum_{i=0}^{N-1} x[i] \cos\left( \frac{2\pi k i}{N} \right)
+			\qquad
+			k = 0, \frac{N}{2} \\[10pt]
+			&\hspace{-17em}B_k = \frac{2}{N} \sum_{i=0}^{N-1} x[i] \sin\left( \frac{2\pi k i}{N} \right)
+			\qquad
+			k = 0, \ldots, \frac{N}{2} \\[10pt]
+			&\hspace{-17em}x[n] = \sum_{k=0}^{N/2} A_k \cos\left( \frac{2\pi k n}{N} \right)
+			+ \sum_{k=0}^{N/2} B_k \sin\left( \frac{2\pi k n}{N} \right)
+		\end{aligned}
+		\vspace{-1em}
+	\end{equation}
+	
+	\subsection{Эффекты дискретизации}
+	\vspace{-1.5em}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1\linewidth, height=0.25\textheight]{img/03_09}
+		\label{fig:03_09}
+	\end{figure}
+	\vspace{-2em}
+	\subsubsection{Алиасинг}
+	\vspace{-0.5em}
+	Алиасинг возникает при нарушении критерия Найквиста.
+	\vspace{-0.5em}
+	\begin{itemize}
+		\item Критерий Найквиста: $f_d \geq 2f_{\text{max}}$, иначе теряется информация.
+		\vspace{-0.5em}
+		\item Алиасинг: наложение спектров при $f_d < 2f_{\text{max}}$.
+		\vspace{-0.5em}
+		\item Пример: помеха 28 кГц при $f_d = 40$ кГц смещается в слышимый диапазон.
+	\end{itemize}
+	\vspace{-1em}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1\linewidth, height=0.2\textheight]{img/03_10}
+		\label{fig:03_10}
+	\end{figure}
+	
+	\newpage
+	
+	\subsubsection{Размножение спектров}
+	Дискретизация вызывает периодическое повторение спектра.
+	\begin{itemize}
+		\item Дискретный сигнал: $s_{\partial}(t) = s(t) \cdot u(t)$, где $u(t) = \sum\limits_{m=-\infty}^{\infty} a_m e^{j m \frac{2\pi}{\tau} t}$.
+		\item Спектр: $S_{\partial}(\omega) = \sum\limits_{m=-\infty}^{\infty} a_m S\left(\omega - m \frac{2\pi}{\tau}\right)$. Ниже его нахождение.
+		\vspace{-1em}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.9\linewidth, height=0.14\textheight]{img/03_11}
+			\label{fig:03_11}
+		\end{figure}
+		\vspace{-2em}
+		\item Коэффициенты $a_m$ убывают медленно согласно спектральной плотности импульса.
+	\end{itemize}
 	
 	\section{Фотоприемники на приборах с зарядовой связью (ФПЗС). КМОП-фотоприемники. Схемы пикселей и их работа.}
 	
